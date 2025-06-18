@@ -24,8 +24,8 @@ class ApiTransactionMapperTest {
             .build();
 
         ApiTransaction domain = mapper.toDomain(entity);
-        assertEquals(entity.getProcessId(), domain.processId());
-        assertEquals(entity.getStatus(), domain.status());
+        assertEquals(entity.getProcessId(), domain.getProcessId());
+        assertEquals(entity.getStatus(), domain.getStatus());
 
         ApiTransactionEntity entity2 = mapper.toEntity(domain);
         assertEquals(entity.getProcessId(), entity2.getProcessId());

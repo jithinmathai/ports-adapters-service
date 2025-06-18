@@ -28,9 +28,9 @@ class RegistrationProfileControllerTest {
     @Test
     void registerProfile_success() throws Exception {
         RegistrationProfileRequest request = RegistrationProfileRequest.builder()
-                .ref_id("C00011").first_name("John").last_name("Doe").hkid("A1234567")
-                .passport_no("P1234567").gender("male").contact_no("85288888888")
-                .DOB("1990-01-01").email("john.doe@example.com").opt_in("yes").build();
+                .refId("C00011").firstName("John").lastName("Doe").hkid("A1234567")
+                .passportNo("P1234567").gender("male").contactNo("85288888888")
+                .dob("1990-01-01").email("john.doe@example.com").optIn("yes").build();
         RegistrationProfileResponse.Data data = new RegistrationProfileResponse.Data("process-1", "pending");
         RegistrationProfileResponse response = new RegistrationProfileResponse(0, "success", data);
         Mockito.when(registrationProfileService.registerProfile(any())).thenReturn(response);
