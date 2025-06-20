@@ -1,5 +1,6 @@
 package com.example.demo.application;
 
+import com.example.demo.domain.model.ApiResponse;
 import com.example.demo.domain.model.RegistrationProfileRequest;
 import com.example.demo.domain.model.RegistrationProfileResponse;
 import com.example.demo.domain.port.ApiTransactionPort;
@@ -28,7 +29,7 @@ class RegistrationProfileServiceImplTest {
                 .refId("C00011").firstName("John").lastName("Doe").hkid("A1234567")
                 .passportNo("P1234567").gender("male").contactNo("85288888888")
                 .dob("1990-01-01").email("john.doe@example.com").optIn("yes").build();
-        RegistrationProfileResponse response = service.registerProfile(request);
+        ApiResponse<RegistrationProfileResponse> response = service.registerProfile(request);
         assertEquals(0, response.getCode());
         assertEquals("success", response.getMsg());
         assertNotNull(response.getData());

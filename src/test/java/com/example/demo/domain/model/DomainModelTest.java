@@ -30,8 +30,16 @@ class DomainModelTest {
 
     @Test
     void testRegistrationProfileResponseRecord() {
-        RegistrationProfileResponse.Data data = new RegistrationProfileResponse.Data("pid", "pending");
-        RegistrationProfileResponse res = new RegistrationProfileResponse(0, "success", data);
-        assertEquals("success", res.getMsg());
+        RegistrationProfileResponse res = new RegistrationProfileResponse("pid", "pending");
+        assertEquals("pid", res.getProcessId());
+    }
+
+    @Test
+    void testApiResponse() {
+        RegistrationProfileResponse res = new RegistrationProfileResponse("pid", "pending");
+        ApiResponse<RegistrationProfileResponse> apiResponse = new ApiResponse<>(0, "success", res);
+        assertEquals(0, apiResponse.getCode());
+        assertEquals("success", apiResponse.getMsg());
+        assertEquals("pid", apiResponse.getData().getProcessId());
     }
 } 
