@@ -1,5 +1,6 @@
 package com.example.demo.adapter.persistence;
 
+import com.example.demo.domain.model.ApiResponse;
 import com.example.demo.domain.model.RegistrationProfileRequest;
 import com.example.demo.domain.model.RegistrationProfileResponse;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -25,10 +26,11 @@ class ApiTransactionPersistenceAdapterTest {
     @Test
     void saveTransaction_success() throws Exception {
         RegistrationProfileRequest request = RegistrationProfileRequest.builder()
-                .ref_id("C00011").first_name("John").last_name("Doe").hkid("A1234567")
-                .passport_no("P1234567").gender("male").contact_no("85288888888")
-                .DOB("1990-01-01").email("john.doe@example.com").opt_in("yes").build();
-        RegistrationProfileResponse response = new RegistrationProfileResponse(0, "success", new RegistrationProfileResponse.Data("pid", "pending"));
+                .refId("C00011").firstName("John").lastName("Doe").hkid("A1234567")
+                .passportNo("P1234567").gender("male").contactNo("85288888888")
+                .dob("1990-01-01").email("john.doe@example.com").optIn("yes").build();
+        RegistrationProfileResponse data = new RegistrationProfileResponse("pid", "pending");
+        ApiResponse<RegistrationProfileResponse> response = new ApiResponse<>(0, "success", data);
         when(objectMapper.writeValueAsString(any())).thenReturn("{}", "{}");
         adapter.saveTransaction("pid", request, response, "pending");
         verify(repository, times(1)).save(any(ApiTransactionEntity.class));
@@ -37,10 +39,11 @@ class ApiTransactionPersistenceAdapterTest {
     @Test
     void saveTransaction_objectMapperThrows_exceptionThrown() throws Exception {
         RegistrationProfileRequest request = RegistrationProfileRequest.builder()
-                .ref_id("C00011").first_name("John").last_name("Doe").hkid("A1234567")
-                .passport_no("P1234567").gender("male").contact_no("85288888888")
-                .DOB("1990-01-01").email("john.doe@example.com").opt_in("yes").build();
-        RegistrationProfileResponse response = new RegistrationProfileResponse(0, "success", new RegistrationProfileResponse.Data("pid", "pending"));
+                .refId("C00011").firstName("John").lastName("Doe").hkid("A1234567")
+                .passportNo("P1234567").gender("male").contactNo("85288888888")
+                .dob("1990-01-01").email("john.doe@example.com").optIn("yes").build();
+        RegistrationProfileResponse data = new RegistrationProfileResponse("pid", "pending");
+        ApiResponse<RegistrationProfileResponse> response = new ApiResponse<>(0, "success", data);
         when(objectMapper.writeValueAsString(any())).thenThrow(new RuntimeException("JSON error"));
         assertThrows(RuntimeException.class, () -> adapter.saveTransaction("pid", request, response, "pending"));
         verify(repository, never()).save(any());
